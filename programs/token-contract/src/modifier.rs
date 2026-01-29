@@ -1,45 +1,95 @@
 use anchor_lang::prelude::*;
-use std::str::FromStr;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
-// --------------------------------------------------------
-// 1. Constants (Hardcoded Admin)
-// --------------------------------------------------------
-// In production, we assume this address will never change.
-// If you want a changeable owner, use a Config Account (State).
-const ADMIN_PUBKEY: &str = "Hu5Vq145t4546454564564564564564564564564564";
-
 #[program]
-pub mod standard_access_control {
+pub mod production_access_control {
     use super::*;
 
-    pub fn admin_only_function(ctx: Context<AdminOnly>) -> Result<()> {
-        msg!("Success: Admin access granted.");
+    // 1. Initialize Global Config (Run once on deploy)
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+        let config = &mut ctx.accounts.config;
+        config.admin = ctx.accounts.admin.key();
+        config.bump = ctx.bumps.config;
+        msg!("Config initialized with Admin: {:?}", config.admin);
+        Ok(())
+    }
+
+    // 2. Admin Only Action (Secure)
+    pub fn restricted_function(ctx: Context<AdminOnly>) -> Result<()> {
+        msg!("Welcome Admin! You are authorized to execute this.");
+        Ok(())
+    }
+
+    // 3. Rotate Keys (Production Feature)
+    // Allows current admin to set a new admin wallet.
+    pub fn transfer_ownership(ctx: Context<TransferOwnership>, new_admin: Pubkey) -> Result<()> {
+        let config = &mut ctx.accounts.config;
+        let old_admin = config.admin;
+        config.admin = new_admin;
+        msg!("Ownership transferred from {:?} to {:?}", old_admin, new_admin);
         Ok(())
     }
 }
 
 // --------------------------------------------------------
-// 2. Validation Structs (The "Gatekeeper")
+// State Structs (The "Storage")
 // --------------------------------------------------------
-#[derive(Accounts)]
-pub struct AdminOnly<'info> {
-    #[account(
-        mut,
-        // ✅ STANDARD ACCESS CONTROL (Hardcoded)
-        // This is the clean, declarative way to restrict access in modern Anchor.
-        // It checks: Signer Key == ADMIN_PUBKEY
-        address = Pubkey::from_str(ADMIN_PUBKEY).unwrap() @ AdminError::NotAuthorized
-    )]
-    pub admin: Signer<'info>,
+#[account]
+pub struct Config {
+    pub admin: Pubkey, // Dynamic Storage for Admin Address
+    pub bump: u8,
 }
 
 // --------------------------------------------------------
-// 3. Custom Errors
+// Validation Contexts (The "Gatekeepers")
+// --------------------------------------------------------
+
+#[derive(Accounts)]
+pub struct Initialize<'info> {
+    #[account(
+        init,
+        payer = admin,
+        space = 8 + 32 + 1, // Discriminator + Pubkey + Bump
+        seeds = [b"access_config"],
+        bump
+    )]
+    pub config: Account<'info, Config>,
+    #[account(mut)]
+    pub admin: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct AdminOnly<'info> {
+    #[account(
+        seeds = [b"access_config"],
+        bump = config.bump,
+        has_one = admin @ AccessError::Unauthorized // ✅ Automagic Check: config.admin must match signer
+    )]
+    pub config: Account<'info, Config>,
+
+    pub admin: Signer<'info>, // The signer trying to call the function
+}
+
+#[derive(Accounts)]
+pub struct TransferOwnership<'info> {
+    #[account(
+        mut,
+        seeds = [b"access_config"],
+        bump = config.bump,
+        has_one = admin @ AccessError::Unauthorized
+    )]
+    pub config: Account<'info, Config>,
+
+    pub admin: Signer<'info>, // Current Admin
+}
+
+// --------------------------------------------------------
+// Errors
 // --------------------------------------------------------
 #[error_code]
-pub enum AdminError {
+pub enum AccessError {
     #[msg("You are not authorized to perform this action.")]
-    NotAuthorized,
+    Unauthorized,
 }
