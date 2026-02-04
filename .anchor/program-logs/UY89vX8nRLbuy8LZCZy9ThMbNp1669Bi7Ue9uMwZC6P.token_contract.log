@@ -1,6 +1,6 @@
 Streaming transaction logs mentioning UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P. Confirmed commitment
-Transaction executed in slot 9:
-  Signature: YAG9oS4xeWzTMSYkeQEYRbiNkgqhUvrhtGrYXfcTpYmM2YYtghhUgiyTVrNcSDwmgGxMei8vWwEUmra9CoXAAXq
+Transaction executed in slot 12:
+  Signature: 33WTY39mnVzdx1QpULUqGw2BghF1LXNcwqgCPJuifzSB4XS9djnLk7ctau5z3sMLq3shtfQMu58vMqEj338EXSKK
   Status: Ok
   Log Messages:
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P invoke [1]
@@ -11,12 +11,12 @@ Transaction executed in slot 9:
     Program log: Instruction: InitializeMint2
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 2780 of 193073 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
-    Program log: Token mint initialized: DFmtPEeNKHfVGkPPvyHKtVzJnd9H3rSjrBfQMYTh3vXR
-    Program data: Lqtroa9o7Oa2FSCKmvGhvTjM1gpDvS5kQ71XEIeGvZFba4pp22FHKAn3jZoTX3eGdPtfqJ/4EKWZuHuymLucr+1ynsaB8W1DXA==
+    Program log: Token mint initialized: DYLMzyBsg4UjWz4sAz2rw32ZNyLgwCo6wxZqgunpBiim
+    Program data: Lqtroa9o7Oa6UyQVLtMBMU8qVtt7ouhZ7YgMvaNvC+G/gQZSOMTHWgn3jZoTX3eGdPtfqJ/4EKWZuHuymLucr+1ynsaB8W1DXA==
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P consumed 23741 of 200000 compute units
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P success
-Transaction executed in slot 11:
-  Signature: 4KV6y6SdsYGAghDyskXGfy5wLzqsu2qUviqKVfj2WhF4w7XJPUKihCSeJHkQmdU1e42ZdVz1NXxs7mQa1R7NtYH8
+Transaction executed in slot 14:
+  Signature: 5jLDcrPJDtkKa81FeXe3LhroSA33FsBKcKLeUtHn5aWNHHKWTekXtayUNWzACuYW5LoGk7xLCbap9379o9KrH3JU
   Status: Ok
   Log Messages:
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P invoke [1]
@@ -26,8 +26,8 @@ Transaction executed in slot 11:
     Program log: Tax config initialized with rate: 100 basis points
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P consumed 10633 of 200000 compute units
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P success
-Transaction executed in slot 13:
-  Signature: 5wBArxmzjcywpPYZY8Qx7xypdqW5aWW3aSWxbFmJuxzBGw3tpCSxTMDyN8wxYGmPYCss9yM7ZxZ3gJf9pWQbvTXG
+Transaction executed in slot 16:
+  Signature: 3G1KMDB3bp6pUbqc8hYyeihmFQfNUBW4RKKuW1ezJkACHpB7gM8C7aiLcdHSGTSiNruoUWErFknwiPV4a6yLiKct
   Status: Ok
   Log Messages:
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P invoke [1]
@@ -36,12 +36,12 @@ Transaction executed in slot 13:
     Program log: Instruction: MintTo
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4492 of 193730 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
-    Program log: Minted 1000 tokens to HPmgwUoUfzE7bxNxRUpV5CrdUZNcCd9af1wFBuGweL7v
-    Program data: z9SAwq82QBi2FSCKmvGhvTjM1gpDvS5kQ71XEIeGvZFba4pp22FHKPOQTFZRr/lBZKRmqbQNvrLezlaADzu8JpuD0zAPhEDF6AMAAAAAAAA=
-    Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P consumed 23629 of 200000 compute units
+    Program log: Minted 1000 tokens to GSZkRVCGzhbpGgNFqRcAUTBT3TYxfkn84ppLL4NqbJj3
+    Program data: z9SAwq82QBi6UyQVLtMBMU8qVtt7ouhZ7YgMvaNvC+G/gQZSOMTHWuVr2mfoglo7THbPweP2kcD3IrTtUx/T5I7N8iqTAVKa6AMAAAAAAAA=
+    Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P consumed 23616 of 200000 compute units
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P success
-Transaction executed in slot 14:
-  Signature: 3TuS82ahLGhiCyD3KW2LZZ4K2X1GUwMx4SMdKz6tJSAJ1kRnv47VuszQy8pB45vRErWbWCbYEsYgJFAh9izVMfz3
+Transaction executed in slot 17:
+  Signature: 4MyWd1rcej8tA8mPcoFACvcT5wVeQLZFu1WJJ2ZWZcgHLqAaimcYuAj5NuZmsaJaQ5PwpJBn7cA4JDxvcTx2x66r
   Status: Ok
   Log Messages:
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P invoke [1]
@@ -49,8 +49,8 @@ Transaction executed in slot 14:
     Program log: Tax config updated to: 200 basis points
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P consumed 4711 of 200000 compute units
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P success
-Transaction executed in slot 16:
-  Signature: 4GERLcykPMzeQDpkZHBtN5HHwkAweaBqQXh8vu57Q6i45z1eynpeRLNFK2UWhe3QsrMHBVUTgy5Eyb3UzREmyey2
+Transaction executed in slot 19:
+  Signature: dRYiJ2njEg2pLRJBm7oYU8LzAdq5rWXXUvKsFxXAE1TDu6QgvYuPVVMgEFERimCd5tcdXLxpBm533XhNWYbhmQX
   Status: Ok
   Log Messages:
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P invoke [1]
@@ -64,6 +64,6 @@ Transaction executed in slot 16:
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 180899 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
     Program log: Transferred 98 tokens (Tax: 2)
-    Program data: jFZqJlWdyvrzkExWUa/5QWSkZqm0Db6y3s5WgA87vCabg9MwD4RAxW4TBiJ1hxAWvcxPcnCwKvgYLRHv8uR4XRSdiX/uSJOBZAAAAAAAAAACAAAAAAAAAPeNmhNfd4Z0+1+on/gQpZm4e7KYu5yv7XKexoHxbUNc
+    Program data: jFZqJlWdyvrla9pn6IJaO0x2z8Hj9pHA9yK07VMf0+SOzfIqkwFSmqlzToBmprm13unUHNS0OqQWOhSR2hITtk76Ql7oYsewZAAAAAAAAAACAAAAAAAAAPeNmhNfd4Z0+1+on/gQpZm4e7KYu5yv7XKexoHxbUNc
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P consumed 25483 of 200000 compute units
     Program UY89vX8nRLbuy8LZCZy9ThMbNp1669Bi7Ue9uMwZC6P success

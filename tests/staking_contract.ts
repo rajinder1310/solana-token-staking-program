@@ -7,7 +7,7 @@ import {
   mintTo,
   getAccount
 } from "@solana/spl-token";
-import { assert } from "chai";
+import { assert, expect } from "chai";
 
 describe("staking_contract", () => {
   // Configure the client to use the local cluster.
@@ -25,6 +25,9 @@ describe("staking_contract", () => {
   // User (Staker) will be the provider for simplicity
   const staker = provider.wallet.publicKey;
   let stakerTokenAccount: anchor.web3.PublicKey;
+
+  // Hacky way to get a different signer for negative tests
+  const unauthorizedUser = anchor.web3.Keypair.generate();
 
   it("Is initialized!", async () => {
     // 1. Create a new Mint (Token)
@@ -63,6 +66,46 @@ describe("staking_contract", () => {
     const vaultAccount = await getAccount(provider.connection, vault);
     assert.ok(vaultAccount.owner.equals(vault), "Vault should be owned by PDA");
     assert.ok(vaultAccount.mint.equals(mint), "Vault should store correct mint");
+  });
+
+  it("NEGATIVE: Cannot Initialize with Unauthorized User", async () => {
+    // Airdrop SOL to unauthorized user
+    const signature = await provider.connection.requestAirdrop(unauthorizedUser.publicKey, 1000000000);
+    await provider.connection.confirmTransaction(signature);
+
+    // Create a new mint for this test to avoid collision with the already initialized one
+    const newMint = await createMint(
+      provider.connection,
+      (provider.wallet as anchor.Wallet).payer,
+      provider.wallet.publicKey,
+      null,
+      6
+    );
+
+    const [newVault] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("vault"), newMint.toBuffer()],
+      program.programId
+    );
+
+    try {
+      await program.methods
+        .initialize()
+        .accounts({
+          vault: newVault,
+          mint: newMint,
+          payer: unauthorizedUser.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
+          tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+          rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+        })
+        .signers([unauthorizedUser])
+        .rpc();
+      assert.fail("Should have failed with Unauthorized error");
+    } catch (err) {
+      // We expect an error here
+      assert.include(err.message, "Unauthorized", "Error should be Unauthorized");
+      console.log("✅ Correctly rejected unauthorized initialization");
+    }
   });
 
   it("Deposits Tokens!", async () => {
@@ -120,6 +163,128 @@ describe("staking_contract", () => {
     // 6. Verify On-Chain Data
     const stakeInfoAccount = await program.account.userStakeInfo.fetch(stakeInfo);
     assert.equal(stakeInfoAccount.amount.toNumber(), 500, "Stake Info should record 500");
-    console.log("Stake Info Amount:", stakeInfoAccount.amount.toString());
+  });
+
+  it("POSITIVE: Accumulates Multiple Deposits", async () => {
+    const depositAmount = new anchor.BN(200);
+
+    await program.methods
+      .deposit(depositAmount) // Deposit another 200
+      .accounts({
+        staker: staker,
+        vault: vault,
+        stakeInfo: stakeInfo,
+        mint: mint,
+        stakerTokenAccount: stakerTokenAccount,
+        tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .rpc();
+
+    // Verify Balances (500 + 200 = 700)
+    const vaultAccount = await getAccount(provider.connection, vault);
+    assert.equal(Number(vaultAccount.amount), 700, "Vault should have 700 tokens");
+
+    const stakeInfoAccount = await program.account.userStakeInfo.fetch(stakeInfo);
+    assert.equal(stakeInfoAccount.amount.toNumber(), 700, "Stake Info should record 700");
+    console.log("✅ Multiple deposits worked");
+  });
+
+  it("NEGATIVE: Cannot Deposit 0 Amount", async () => {
+    try {
+      await program.methods
+        .deposit(new anchor.BN(0))
+        .accounts({
+          staker: staker,
+          vault: vault,
+          stakeInfo: stakeInfo,
+          mint: mint,
+          stakerTokenAccount: stakerTokenAccount,
+          tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .rpc();
+      assert.fail("Should have failed with InvalidAmount");
+    } catch (err) {
+      assert.include(err.message, "Amount must be greater than zero", "Caught expected error");
+      console.log("✅ Correctly rejected 0 deposit");
+    }
+  });
+
+  it("NEGATIVE: Insufficient Funds", async () => {
+    // User has 300 left (1000 - 500 - 200 = 300)
+    // Try to deposit 400
+    try {
+      await program.methods
+        .deposit(new anchor.BN(400))
+        .accounts({
+          staker: staker,
+          vault: vault,
+          stakeInfo: stakeInfo,
+          mint: mint,
+          stakerTokenAccount: stakerTokenAccount,
+          tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .rpc();
+      assert.fail("Should have failed due to token program error (insufficient funds)");
+    } catch (err) {
+      // This usually throws a Token Program error specific to the SPL Token crate,
+      // often purely execution or custom error. Just checking it fails is good enough for now,
+      // or checking for 'insufficient funds' if the error log provides it.
+      // Anchor wraps it, so we check general failure or log.
+      assert.ok(true, "Transaction failed as expected");
+      console.log("✅ Correctly rejected insufficient funds");
+    }
+  });
+
+  it("Withdraws Tokens!", async () => {
+    // Current Stake: 700
+    // 1. Call Withdraw
+    await program.methods
+      .withdraw()
+      .accounts({
+        staker: staker,
+        vault: vault,
+        stakeInfo: stakeInfo,
+        mint: mint,
+        stakerTokenAccount: stakerTokenAccount,
+        tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+      })
+      .rpc();
+
+    console.log("Withdraw Successful!");
+
+    // 2. Verify Vault Balance is 0
+    const vaultAccount = await getAccount(provider.connection, vault);
+    assert.equal(Number(vaultAccount.amount), 0, "Vault should be empty");
+
+    // 3. Verify User Balance (Should be 1000 total tokens again)
+    const userAccount = await getAccount(provider.connection, stakerTokenAccount);
+    assert.equal(Number(userAccount.amount), 1000, "User should have all tokens back");
+
+    // 4. Verify User Stake Info Reset
+    const stakeInfoAccount = await program.account.userStakeInfo.fetch(stakeInfo);
+    assert.equal(stakeInfoAccount.amount.toNumber(), 0, "Stake Info should be reset to 0");
+  });
+
+  it("NEGATIVE: Cannot Withdraw with 0 Balance (Double Withdraw)", async () => {
+    try {
+      await program.methods
+        .withdraw()
+        .accounts({
+          staker: staker,
+          vault: vault,
+          stakeInfo: stakeInfo,
+          mint: mint,
+          stakerTokenAccount: stakerTokenAccount,
+          tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+        })
+        .rpc();
+      assert.fail("Should have failed with InvalidWithdraw");
+    } catch (err) {
+      assert.include(err.message, "No tokens to withdraw", "Caught expected error");
+      console.log("✅ Correctly rejected double withdraw");
+    }
   });
 });

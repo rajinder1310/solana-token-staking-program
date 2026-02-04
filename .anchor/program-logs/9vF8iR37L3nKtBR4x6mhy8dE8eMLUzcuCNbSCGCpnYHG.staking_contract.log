@@ -1,6 +1,6 @@
 Streaming transaction logs mentioning 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG. Confirmed commitment
-Transaction executed in slot 4:
-  Signature: 57GyWmmgNgxWZBwSow7GRjrnqm7w32DnN66q6hEPRLfRD8gWPUwrug2YmwBs3KmV4HL5xyr7YxeipfWC5VSvyxoh
+Transaction executed in slot 3:
+  Signature: XkmDcLqtgDnxbxLwcPrvxtrdbbDmjRXzcL8RFa4MzgnRctR1YDAZBgTAwQsKhv2UWgm9Chzww3HtAGEUerQFUdD
   Status: Ok
   Log Messages:
     Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG invoke [1]
@@ -9,13 +9,13 @@ Transaction executed in slot 4:
     Program 11111111111111111111111111111111 success
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]
     Program log: Instruction: InitializeAccount3
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4214 of 188603 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4214 of 190103 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
     Program log: Staking Vault Initialized Successfully!
-    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG consumed 18152 of 200000 compute units
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG consumed 16652 of 200000 compute units
     Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG success
-Transaction executed in slot 7:
-  Signature: 2hdfB7EkdtosAnWq2v7XPVLvFK7p7Th8PiTi4eWU4NRQFSejpBsntYTzPBkr8dTwWS3f8UWErdEbKbxjTXpJfZWK
+Transaction executed in slot 8:
+  Signature: ofJP4LTVSZDqNRgoQ4dPRWtKtTXardRvK58MiL7ma6LbiyVvso4W3HYYdp3NCau23LVmTrFbkXXNPA5Wcxha5mt
   Status: Ok
   Log Messages:
     Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG invoke [1]
@@ -24,9 +24,37 @@ Transaction executed in slot 7:
     Program 11111111111111111111111111111111 success
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]
     Program log: Instruction: Transfer
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 182029 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 183528 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
     Program data: 3IKRjm17JmT3jZoTX3eGdPtfqJ/4EKWZuHuymLucr+1ynsaB8W1DXPQBAAAAAAAA9AEAAAAAAAA=
     Program log: Staked 500 tokens successfully. Total: 500
-    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG consumed 24737 of 200000 compute units
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG consumed 23250 of 200000 compute units
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG success
+Transaction executed in slot 9:
+  Signature: 4KwTxV5QHy7WFU3p39Hqx3co5nWduQMbkszTiCKxbNURDVmUG5ot4KwkmgnypwdAdAPCWCEZHVr6W5Zcpgb7ctGd
+  Status: Ok
+  Log Messages:
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG invoke [1]
+    Program log: Instruction: Deposit
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]
+    Program log: Instruction: Transfer
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 186915 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
+    Program data: 3IKRjm17JmT3jZoTX3eGdPtfqJ/4EKWZuHuymLucr+1ynsaB8W1DXMgAAAAAAAAAvAIAAAAAAAA=
+    Program log: Staked 200 tokens successfully. Total: 700
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG consumed 19863 of 200000 compute units
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG success
+Transaction executed in slot 10:
+  Signature: 5yM9pzsBNTadKdBEhK4FBqE4ZShrzLzBxSA59FQa2U8imcs8wqinuWpbXiC1wUQBX5TWnAGuNHsnpqJW3jBA73ix
+  Status: Ok
+  Log Messages:
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG invoke [1]
+    Program log: Instruction: Withdraw
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]
+    Program log: Instruction: Transfer
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4554 of 188218 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
+    Program data: HnRuk1dZCZ73jZoTX3eGdPtfqJ/4EKWZuHuymLucr+1ynsaB8W1DXLwCAAAAAAAAAAAAAAAAAAA=
+    Program log: Withdrawn 700 tokens successfully. Account Reset.
+    Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG consumed 17974 of 200000 compute units
     Program 9vF8iR37L3nKtBR4x6mhy8dE8eMLUzcuCNbSCGCpnYHG success
