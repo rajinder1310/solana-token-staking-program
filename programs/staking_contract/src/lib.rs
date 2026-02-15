@@ -169,6 +169,8 @@ pub enum ErrorCode {
     InvalidAmount, // Agar 0 ya negative deposit karne ki koshish kare
     #[msg("No tokens to withdraw.")]
     InvalidWithdraw, // Agar khali account se withdraw kare
+    #[msg("Fee vault must be owned by admin.")]
+    InvalidFeeVault, // SECURITY FIX: Fee vault must belong to admin - prevents fee theft
 }
 
 // ----------------- STRUCTS (Data Validation) -----------------
@@ -275,8 +277,11 @@ pub struct Withdraw<'info> {
     #[account(mut)]
     pub staker_token_account: Account<'info, TokenAccount>, // Jahan paisa wapis aayega user ke paas
 
-    #[account(mut)]
-    pub fee_vault: Account<'info, TokenAccount>, // Admin ka account jahan fee jayegi
+    #[account(
+        mut,
+        constraint = fee_vault.owner == config.admin @ ErrorCode::InvalidFeeVault // CRITICAL FIX: Ensure fee_vault belongs to admin
+    )]
+    pub fee_vault: Account<'info, TokenAccount>, // Admin ka account jahan fee jayegi - NOW VALIDATED
 
     #[account(
         seeds = [b"config"],
